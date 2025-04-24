@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { 
   Card, 
@@ -11,7 +10,7 @@ import VirtualCompanion from "@/components/VirtualCompanion";
 import TaskCard, { Task, TaskStatus } from "@/components/TaskCard";
 import StreakCounter from "@/components/StreakCounter";
 import MoodChecker from "@/components/MoodChecker";
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data for initial states
 const mockTasks: Task[] = [
