@@ -3,7 +3,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Check, Clock } from "lucide-react";
+import { Check, Clock, DollarSign } from "lucide-react";
 
 export type TaskStatus = "completed" | "pending" | "missed";
 
@@ -14,6 +14,7 @@ export interface Task {
   status: TaskStatus;
   dueDate: Date;
   goalId?: string;
+  deposit?: number;
 }
 
 interface TaskCardProps {
@@ -22,7 +23,7 @@ interface TaskCardProps {
 }
 
 const TaskCard = ({ task, onStatusChange }: TaskCardProps) => {
-  const { id, title, description, status, dueDate } = task;
+  const { id, title, description, status, dueDate, deposit } = task;
   
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("en-US", {
@@ -61,9 +62,18 @@ const TaskCard = ({ task, onStatusChange }: TaskCardProps) => {
             {description && (
               <p className="text-sm text-muted-foreground m-0">{description}</p>
             )}
-            <div className="flex items-center text-xs text-muted-foreground mt-1">
-              <Clock size={12} className="mr-1" />
-              {formatDate(dueDate)}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
+              <span className="flex items-center">
+                <Clock size={12} className="mr-1" />
+                {formatDate(dueDate)}
+              </span>
+              
+              {deposit && (
+                <span className="flex items-center text-green-600 font-medium">
+                  <DollarSign size={12} className="mr-0.5" />
+                  {deposit}
+                </span>
+              )}
             </div>
           </div>
         </div>

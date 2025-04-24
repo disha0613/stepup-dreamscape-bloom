@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { 
   Card, 
@@ -10,6 +11,7 @@ import VirtualCompanion from "@/components/VirtualCompanion";
 import TaskCard, { Task, TaskStatus } from "@/components/TaskCard";
 import StreakCounter from "@/components/StreakCounter";
 import MoodChecker from "@/components/MoodChecker";
+import TaskInput from "@/components/TaskInput";
 import { useToast } from "@/hooks/use-toast";
 
 // Mock data for initial states
@@ -49,6 +51,7 @@ const Dashboard = () => {
   const [companionMood, setCompanionMood] = useState<"happy" | "neutral" | "sad">("neutral");
   const [tasksCompleted, setTasksCompleted] = useState(23);
   const [todayComplete, setTodayComplete] = useState(false);
+  const [userMood, setUserMood] = useState<string>("neutral");
   
   // Handle task status change
   const handleTaskStatusChange = (taskId: string, status: TaskStatus) => {
@@ -108,6 +111,9 @@ const Dashboard = () => {
   
   // Handle mood changes
   const handleMoodChange = (mood: any) => {
+    // Store user mood
+    setUserMood(mood);
+    
     // Update companion mood based on user mood
     if (["great", "good"].includes(mood)) {
       setCompanionMood("happy");
@@ -122,10 +128,26 @@ const Dashboard = () => {
       description: "Your companion has adjusted to match your energy!",
     });
   };
+  
+  // Handle adding a new task
+  const handleAddTask = (task: Task) => {
+    setTasks(prev => [...prev, task]);
+  };
+  
+  // Handle adding multiple tasks at once
+  const handleAddMultipleTasks = (newTasks: Task[]) => {
+    setTasks(prev => [...prev, ...newTasks]);
+  };
 
   return (
     <div className="animate-fade-in">
       <h1 className="mb-6">Dashboard</h1>
+      
+      <TaskInput 
+        onAddTask={handleAddTask} 
+        onAddMultipleTasks={handleAddMultipleTasks}
+        userMood={userMood}
+      />
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <Card className="col-span-1 md:col-span-2">

@@ -2,9 +2,9 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
-type Mood = "great" | "good" | "okay" | "meh" | "bad";
+export type Mood = "great" | "good" | "okay" | "meh" | "bad";
 
 interface MoodCheckerProps {
   onMoodChange?: (mood: Mood) => void;
@@ -31,7 +31,7 @@ const MoodChecker = ({ onMoodChange }: MoodCheckerProps) => {
         <div className="flex flex-wrap justify-between gap-2">
           <Button
             variant="outline"
-            className="flex-1 py-6 flex flex-col items-center hover:bg-pastel-green/50"
+            className="flex-1 py-6 flex flex-col items-center hover:bg-green-50"
             onClick={() => handleMoodSelect("great")}
           >
             <span className="text-2xl mb-1">😁</span>
@@ -39,7 +39,7 @@ const MoodChecker = ({ onMoodChange }: MoodCheckerProps) => {
           </Button>
           <Button
             variant="outline"
-            className="flex-1 py-6 flex flex-col items-center hover:bg-pastel-blue/50"
+            className="flex-1 py-6 flex flex-col items-center hover:bg-blue-50"
             onClick={() => handleMoodSelect("good")}
           >
             <span className="text-2xl mb-1">🙂</span>
@@ -47,7 +47,7 @@ const MoodChecker = ({ onMoodChange }: MoodCheckerProps) => {
           </Button>
           <Button
             variant="outline"
-            className="flex-1 py-6 flex flex-col items-center hover:bg-pastel-yellow/50"
+            className="flex-1 py-6 flex flex-col items-center hover:bg-yellow-50"
             onClick={() => handleMoodSelect("okay")}
           >
             <span className="text-2xl mb-1">😐</span>
@@ -55,7 +55,7 @@ const MoodChecker = ({ onMoodChange }: MoodCheckerProps) => {
           </Button>
           <Button
             variant="outline"
-            className="flex-1 py-6 flex flex-col items-center hover:bg-pastel-orange/50"
+            className="flex-1 py-6 flex flex-col items-center hover:bg-orange-50"
             onClick={() => handleMoodSelect("meh")}
           >
             <span className="text-2xl mb-1">😕</span>
@@ -63,7 +63,7 @@ const MoodChecker = ({ onMoodChange }: MoodCheckerProps) => {
           </Button>
           <Button
             variant="outline"
-            className="flex-1 py-6 flex flex-col items-center hover:bg-pastel-pink/50"
+            className="flex-1 py-6 flex flex-col items-center hover:bg-pink-50"
             onClick={() => handleMoodSelect("bad")}
           >
             <span className="text-2xl mb-1">😔</span>
