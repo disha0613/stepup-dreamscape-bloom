@@ -8,13 +8,13 @@ import {
   CardTitle 
 } from "@/components/ui/card";
 import VirtualCompanion from "@/components/VirtualCompanion";
-import TaskCard, { Task, TaskStatus } from "@/components/TaskCard";
+import TaskCard, { Task, TaskStatus, Comment } from "@/components/TaskCard";
 import StreakCounter from "@/components/StreakCounter";
 import MoodChecker from "@/components/MoodChecker";
 import TaskInput from "@/components/TaskInput";
 import { useToast } from "@/hooks/use-toast";
 
-// Mock data for initial states
+// Mock data for initial tasks with comments
 const mockTasks: Task[] = [
   {
     id: "1",
@@ -22,12 +22,34 @@ const mockTasks: Task[] = [
     description: "Algebra Chapter 7, Problems 1-20",
     status: "pending",
     dueDate: new Date(Date.now() + 3600000), // 1 hour from now
+    comments: [
+      {
+        id: "c1",
+        text: "Need to focus on the quadratic equations section",
+        createdAt: new Date(Date.now() - 86400000), // 1 day ago
+        author: "Me"
+      }
+    ]
   },
   {
     id: "2",
     title: "30 minutes of Spanish practice",
     status: "completed",
     dueDate: new Date(),
+    comments: [
+      {
+        id: "c2",
+        text: "Focused on past tense conjugations",
+        createdAt: new Date(Date.now() - 43200000), // 12 hours ago
+        author: "Me"
+      },
+      {
+        id: "c3",
+        text: "Used Duolingo and completed 3 lessons",
+        createdAt: new Date(Date.now() - 21600000), // 6 hours ago
+        author: "Me"
+      }
+    ]
   },
   {
     id: "3",
@@ -40,6 +62,14 @@ const mockTasks: Task[] = [
     title: "Submit English essay draft",
     status: "missed",
     dueDate: new Date(Date.now() - 86400000), // 1 day ago
+    comments: [
+      {
+        id: "c4",
+        text: "Missed deadline due to power outage",
+        createdAt: new Date(Date.now() - 43200000), // 12 hours ago
+        author: "Me"
+      }
+    ]
   }
 ];
 
@@ -139,6 +169,26 @@ const Dashboard = () => {
     setTasks(prev => [...prev, ...newTasks]);
   };
 
+  // Handle adding a comment to a task
+  const handleAddComment = (taskId: string, commentText: string) => {
+    setTasks(prev => prev.map(task => {
+      if (task.id === taskId) {
+        const newComment: Comment = {
+          id: Date.now().toString(),
+          text: commentText,
+          createdAt: new Date(),
+          author: "Me"
+        };
+        
+        return {
+          ...task,
+          comments: [...(task.comments || []), newComment]
+        };
+      }
+      return task;
+    }));
+  };
+
   return (
     <div className="animate-fade-in">
       <h1 className="mb-6">Dashboard</h1>
@@ -161,6 +211,7 @@ const Dashboard = () => {
                 key={task.id} 
                 task={task} 
                 onStatusChange={handleTaskStatusChange}
+                onAddComment={handleAddComment}
               />
             ))}
           </CardContent>
